@@ -88,7 +88,7 @@ const BroswerPage = () => {
   const content = (
     <div className="browse-page">
       <Navbar/>
-      <h1 className="pixelstoreheading">Welcome to tm Pixel Store</h1>
+      <h1 className="pixelstoreheading">Welcome to Pixel Store</h1>
       <div className="filter-section">
         <div className="title-srch">
           <input

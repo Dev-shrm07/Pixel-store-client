@@ -4,6 +4,7 @@ import { Post } from "../models/post";
 import {User} from "../models/user"
 
 const url = "https://pixel-store-backend.onrender.com";
+//const url = "http://localhost:8000"
 export interface uploadPost {
   image: string;
   image_watermark: string;
@@ -71,7 +72,7 @@ export async function Login(user: LoginCred):Promise<User>{
     headers:{
       "Content-Type": "application/json"
     },
-    //cache:'no-store',
+    cache:'no-store',
     body:JSON.stringify(user)
   })
   return response.json()
@@ -118,8 +119,8 @@ export async function getPostsWelcome(): Promise<Post[]> {
   return response.json();
 }
 
-const Url :string = 'https://pixel-store-backend.onrender.com/api/posts/'
-const UrlSave:string = 'https://pixel-store-backend.onrender.com/api/posts/save/'
+const Url :string = url+'/api/posts/'
+const UrlSave:string = url+'/api/posts/save/'
 export async function getPostByid(id:string):Promise<Post[]>{
   const response = await fetchData(`${Url}${id}`,{
     method:"GET",
@@ -182,7 +183,7 @@ export async function Logout(){
 }
 
 export async function getMyPosts(): Promise<Post[]> {
-  const response = await fetchData("https://pixel-store-backend.onrender.com/api/posts/mycollection/", {
+  const response = await fetchData(url+"/api/posts/mycollection/", {
     method: "GET",
     cache:'no-store',
     credentials: "include",
@@ -191,7 +192,7 @@ export async function getMyPosts(): Promise<Post[]> {
 }
 
 export async function deletePost(postid:string){
-  await fetchData("https://pixel-store-backend.onrender.com/api/posts/"+postid, {method:"DELETE"})
+  await fetchData(url+"/api/posts/"+postid, {method:"DELETE"})
 }
 
 
@@ -271,4 +272,21 @@ export async function chechSessionStatus(postid:string):Promise<SessionStatus>{
     cache:"no-store"
   })
   return res.json()
+}
+
+export interface EditPass{
+  password:string,
+}
+export async function EditPassword(user: EditPass):Promise<User>{
+  const response = await fetchData(url+"/api/user/password/edit",{
+    method:"PATCH",
+    credentials:"include", 
+    headers:{
+      "Content-Type": "application/json"
+    },
+    cache:'no-store',
+    body:JSON.stringify(user)
+  })
+  return response.json()
+
 }
